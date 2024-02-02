@@ -1,20 +1,35 @@
 package com.serhiitymoshenko.organizer.ui.auth
 
+import android.app.Activity
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInCredential
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.serhiitymoshenko.organizer.BuildConfig
 import com.serhiitymoshenko.organizer.databinding.FragmentAuthBinding
 import com.serhiitymoshenko.organizer.utils.TAG
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class AuthFragment : Fragment() {
     private var _binding: FragmentAuthBinding? = null
@@ -43,7 +58,18 @@ class AuthFragment : Fragment() {
 
     private val intentSenderLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            val credentials = oneTapClient.getSignInCredentialFromIntent(result.data)
+            val idToken = credentials.googleIdToken
+
+            if (idToken != null) {
+                val firebaseCredentials = GoogleAuthProvider.getCredential(idToken, null)
+                firebaseSignIn(firebaseCredentials)
+            }
         }
+
+    private val firebaseAuth by lazy {
+        Firebase.auth
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,9 +85,34 @@ class AuthFragment : Fragment() {
 
         val activity = requireActivity()
 
+        checkIfUserExists(activity)
+
         binding.root.setOnClickListener {
             signIn(activity)
         }
+    }
+
+    private fun checkIfUserExists(activity: FragmentActivity) {
+        val currentUser = firebaseAuth.currentUser
+
+        if (currentUser != null) {
+            openOrganizerFragment(activity)
+        } else {
+            signIn(activity)
+        }
+    }
+
+    private fun openOrganizerFragment(activity: FragmentActivity) {
+        // val fragmentManager = activity.supportFragmentManager
+        Toast.makeText(requireContext(), "Next fragment", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun firebaseSignIn(credentials: AuthCredential) {
+        Log.d(TAG, credentials.toString())
+        firebaseAuth.signInWithCredential(credentials)
+            .addOnCanceledListener {
+                Toast.makeText(requireContext(), "Registered", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun signIn(activity: FragmentActivity) {
