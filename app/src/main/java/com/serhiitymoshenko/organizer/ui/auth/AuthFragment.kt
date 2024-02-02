@@ -17,7 +17,9 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.serhiitymoshenko.organizer.BuildConfig
+import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.databinding.FragmentAuthBinding
+import com.serhiitymoshenko.organizer.ui.organizer.OrganizerFragment
 import com.serhiitymoshenko.organizer.utils.TAG
 import org.koin.android.ext.android.inject
 
@@ -83,7 +85,8 @@ class AuthFragment : Fragment() {
     private fun checkIfUserExists(activity: FragmentActivity) {
         val currentUser = firebaseAuth.currentUser
 
-        if (currentUser != null) {
+        // TODO: change
+        if (currentUser == null) {
             openOrganizerFragment(activity)
         } else {
             signIn(activity)
@@ -91,8 +94,13 @@ class AuthFragment : Fragment() {
     }
 
     private fun openOrganizerFragment(activity: FragmentActivity) {
-        // val fragmentManager = activity.supportFragmentManager
-        Toast.makeText(requireContext(), "Next fragment", Toast.LENGTH_SHORT).show()
+        val mainContainerId = R.id.main_container
+        val organizerFragment = OrganizerFragment()
+
+        val fragmentManager = activity.supportFragmentManager
+        fragmentManager.beginTransaction()
+            .replace(mainContainerId, organizerFragment)
+            .commit()
     }
 
     private fun firebaseSignIn(credentials: AuthCredential) {
