@@ -1,6 +1,5 @@
 package com.serhiitymoshenko.organizer.ui.auth
 
-import android.app.Activity
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
@@ -8,32 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.serhiitymoshenko.organizer.BuildConfig
 import com.serhiitymoshenko.organizer.databinding.FragmentAuthBinding
 import com.serhiitymoshenko.organizer.utils.TAG
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlin.math.log
+import org.koin.android.ext.android.inject
 
 class AuthFragment : Fragment() {
     private var _binding: FragmentAuthBinding? = null
     private val binding get() = _binding!!
+
+    private val firebaseAuth: FirebaseAuth by inject<FirebaseAuth>()
 
     private val oneTapClient by lazy {
         Identity.getSignInClient(requireContext())
@@ -66,10 +58,6 @@ class AuthFragment : Fragment() {
                 firebaseSignIn(firebaseCredentials)
             }
         }
-
-    private val firebaseAuth by lazy {
-        Firebase.auth
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
