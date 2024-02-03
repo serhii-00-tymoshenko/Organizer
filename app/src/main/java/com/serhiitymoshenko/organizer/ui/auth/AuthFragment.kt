@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -57,7 +56,7 @@ class AuthFragment : Fragment() {
 
             if (idToken != null) {
                 val firebaseCredentials = GoogleAuthProvider.getCredential(idToken, null)
-                firebaseSignIn(firebaseCredentials)
+                firebaseSignIn(firebaseCredentials, requireActivity())
             }
         }
 
@@ -85,7 +84,6 @@ class AuthFragment : Fragment() {
     private fun checkIfUserExists(activity: FragmentActivity) {
         val currentUser = firebaseAuth.currentUser
 
-        // TODO: change
         if (currentUser != null) {
             openOrganizerFragment(activity)
         } else {
@@ -103,11 +101,11 @@ class AuthFragment : Fragment() {
             .commit()
     }
 
-    private fun firebaseSignIn(credentials: AuthCredential) {
+    private fun firebaseSignIn(credentials: AuthCredential, activity: FragmentActivity) {
         Log.d(TAG, credentials.toString())
         firebaseAuth.signInWithCredential(credentials)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Registered", Toast.LENGTH_SHORT).show()
+                openOrganizerFragment(activity)
             }
     }
 
