@@ -86,7 +86,7 @@ class AuthFragment : Fragment() {
         val currentUser = firebaseAuth.currentUser
 
         // TODO: change
-        if (currentUser == null) {
+        if (currentUser != null) {
             openOrganizerFragment(activity)
         } else {
             signIn(activity)
@@ -106,7 +106,7 @@ class AuthFragment : Fragment() {
     private fun firebaseSignIn(credentials: AuthCredential) {
         Log.d(TAG, credentials.toString())
         firebaseAuth.signInWithCredential(credentials)
-            .addOnCanceledListener {
+            .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Registered", Toast.LENGTH_SHORT).show()
             }
     }

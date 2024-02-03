@@ -7,4 +7,5 @@
     <string name="notes_title">Notes</string>
     <string name="profile_title">Profile</string>
     <string name="contacts_title">Contacts</string>
+    <string name="description">Description</string>
 </resources>

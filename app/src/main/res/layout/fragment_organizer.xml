@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_organizer_container"
-        android:name="com.serhiitymoshenko.organizer.ui.organizer.todo.TodoFragment"
+        android:name="com.serhiitymoshenko.organizer.ui.organizer.todo.tasks.inprogresstasks.InProgressTasksFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/navigation_view"

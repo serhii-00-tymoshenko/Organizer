@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
+    kotlin("kapt")
 }
 
 android {
@@ -82,4 +84,13 @@ dependencies {
 
     // Google Play services
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+}
+
+kapt {
+    correctErrorTypes = true
 }

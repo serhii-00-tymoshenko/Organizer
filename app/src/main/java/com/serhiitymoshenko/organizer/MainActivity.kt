@@ -1,9 +1,12 @@
 package com.serhiitymoshenko.organizer
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.serhiitymoshenko.organizer.data.di.remoteModule
+import androidx.appcompat.app.AppCompatActivity
+import com.serhiitymoshenko.organizer.data.di.coroutinesModule
+import com.serhiitymoshenko.organizer.data.di.databaseModule
+import com.serhiitymoshenko.organizer.data.di.firebaseModule
+import com.serhiitymoshenko.organizer.data.di.viewModelsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         startKoin {
             androidLogger()
             androidContext(context)
-            modules(remoteModule)
+            modules(coroutinesModule, databaseModule, firebaseModule, viewModelsModule)
         }
     }
 
