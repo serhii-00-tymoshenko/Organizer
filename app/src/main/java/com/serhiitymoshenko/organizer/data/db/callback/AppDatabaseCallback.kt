@@ -3,9 +3,9 @@ package com.serhiitymoshenko.organizer.data.db.callback
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.serhiitymoshenko.organizer.data.db.daos.TasksDao
-import com.serhiitymoshenko.organizer.data.entities.task.Task
-import com.serhiitymoshenko.organizer.data.entities.task.TaskReminderStatus
-import com.serhiitymoshenko.organizer.data.entities.task.TaskStatus
+import com.serhiitymoshenko.organizer.data.models.Task
+import com.serhiitymoshenko.organizer.data.models.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.TaskStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent

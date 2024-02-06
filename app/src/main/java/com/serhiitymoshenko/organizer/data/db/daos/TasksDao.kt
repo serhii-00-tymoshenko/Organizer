@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.serhiitymoshenko.organizer.data.entities.task.Task
-import com.serhiitymoshenko.organizer.data.entities.task.TaskStatus
+import com.serhiitymoshenko.organizer.data.models.Task
+import com.serhiitymoshenko.organizer.data.models.TaskStatus
 import kotlinx.coroutines.flow.Flow
 
 @Dao

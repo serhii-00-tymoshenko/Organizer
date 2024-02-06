@@ -18,7 +18,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.serhiitymoshenko.organizer.BuildConfig
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.databinding.FragmentAuthBinding
-import com.serhiitymoshenko.organizer.ui.organizer.OrganizerFragment
+import com.serhiitymoshenko.organizer.ui.home.HomeFragment
 import com.serhiitymoshenko.organizer.utils.TAG
 import org.koin.android.ext.android.inject
 
@@ -93,11 +93,11 @@ class AuthFragment : Fragment() {
 
     private fun openOrganizerFragment(activity: FragmentActivity) {
         val mainContainerId = R.id.main_container
-        val organizerFragment = OrganizerFragment()
+        val homeFragment = HomeFragment()
 
         val fragmentManager = activity.supportFragmentManager
         fragmentManager.beginTransaction()
-            .replace(mainContainerId, organizerFragment)
+            .replace(mainContainerId, homeFragment)
             .commit()
     }
 
