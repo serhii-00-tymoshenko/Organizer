@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.data.entities.task.Task
 import com.serhiitymoshenko.organizer.databinding.FragmentInProgressTasksBinding
-import com.serhiitymoshenko.organizer.ui.organizer.todo.tasks.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.organizer.todo.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.organizer.todo.edittask.EditTaskFragment
 import com.serhiitymoshenko.organizer.ui.organizer.todo.tasks.inprogresstasks.viewmodel.InProgressTasksViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -19,15 +21,13 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class InProgressTasksFragment : Fragment() {
+
     private var _binding: FragmentInProgressTasksBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<InProgressTasksViewModel>()
-    private val tasksAdapter by lazy {
-        TasksAdapter { task ->
-            openEditTaskFragment(requireActivity(), task)
-        }
-    }
+
+    private lateinit var tasksAdapter: TasksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,11 +40,15 @@ class InProgressTasksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecycler()
+        val activity = requireActivity()
+
+        setupRecycler(activity)
         initObservers()
     }
 
-    private fun setupRecycler() {
+    private fun setupRecycler(activity: FragmentActivity) {
+        initAdapter(activity)
+
         val recycler = binding.tasks.tasksRecycler
         recycler.apply {
             adapter = tasksAdapter
@@ -53,9 +57,22 @@ class InProgressTasksFragment : Fragment() {
         }
     }
 
-    private fun openEditTaskFragment(activity: FragmentActivity, task: Task) {
-        val mainFragmentId = R.id.main_container
+    private fun initAdapter(activity: FragmentActivity) {
+        tasksAdapter = TasksAdapter { task ->
+            openEditTaskFragment(activity, task)
+        }
+    }
 
+    private fun openEditTaskFragment(activity: FragmentActivity, task: Task) {
+        val editTaskFragment = EditTaskFragment.newInstance(task)
+
+        val organizerContainerId = R.id.organizer_container
+
+        val fragmentManager = activity.supportFragmentManager
+        fragmentManager.commit {
+            replace(organizerContainerId, editTaskFragment)
+            addToBackStack(null)
+        }
     }
 
     private fun initObservers() {

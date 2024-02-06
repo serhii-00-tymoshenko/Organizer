@@ -14,6 +14,9 @@ interface TasksDao {
     @Query("SELECT * FROM tasks WHERE status LIKE :taskStatus ORDER BY title")
     fun getTasks(taskStatus: TaskStatus): Flow<List<Task>>
 
+    @Query("SELECT * FROM tasks WHERE title LIKE '%' || :query || '%'")
+    fun getSearchedTasks(query: String): Flow<List<Task>>
+
     @Update
     fun updateTask(task: Task)
 

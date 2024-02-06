@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.databinding.FragmentDeletedTasksBinding
-import com.serhiitymoshenko.organizer.ui.organizer.todo.tasks.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.organizer.todo.adapters.TasksAdapter
 
 class DeletedTasksFragment : Fragment() {
     private var _binding: FragmentDeletedTasksBinding? = null

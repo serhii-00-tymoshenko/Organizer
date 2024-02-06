@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.databinding.FragmentDoneTasksBinding
-import com.serhiitymoshenko.organizer.ui.organizer.todo.tasks.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.organizer.todo.adapters.TasksAdapter
 
 class DoneTasksFragment : Fragment() {
     private var _binding: FragmentDoneTasksBinding? = null

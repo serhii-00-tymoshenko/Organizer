@@ -34,5 +34,21 @@ class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
                 0
             )
         )
+        tasksDao.insertTask(
+            Task(
+                "Hello",
+                TaskStatus.IN_PROGRESS,
+                TaskReminderStatus.NONE,
+                0
+            )
+        )
+        tasksDao.insertTask(
+            Task(
+                "Dmytro, ce rz ui",
+                TaskStatus.IN_PROGRESS,
+                TaskReminderStatus.NONE,
+                0
+            )
+        )
     }
 }

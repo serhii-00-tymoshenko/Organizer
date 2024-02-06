@@ -1,15 +1,17 @@
 package com.serhiitymoshenko.organizer.ui.organizer
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.navigation.NavigationBarView
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.commit
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.databinding.FragmentOrganizerBinding
+import com.serhiitymoshenko.organizer.ui.organizer.contacts.ContactsFragment
+import com.serhiitymoshenko.organizer.ui.organizer.todo.TodoFragment
 
 class OrganizerFragment : Fragment() {
     private var _binding: FragmentOrganizerBinding? = null
@@ -27,16 +29,17 @@ class OrganizerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val context = requireContext()
+        val activity = requireActivity()
 
-        setupNavigation(context)
+        setupNavigation(activity)
     }
 
-    private fun setupNavigation(context: Context) {
-        NavigationBarView.OnItemSelectedListener { item ->
+    private fun setupNavigation(activity: FragmentActivity) {
+        binding.navigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.todo -> {
-                    Toast.makeText(context, "Todo", Toast.LENGTH_SHORT).show()
+                    val todoFragment = TodoFragment()
+                    openNavSelectedFragment(activity, todoFragment)
                     true
                 }
 
@@ -46,7 +49,8 @@ class OrganizerFragment : Fragment() {
                 }
 
                 R.id.contacts -> {
-                    Toast.makeText(context, "Todo", Toast.LENGTH_SHORT).show()
+                    val contactsFragment = ContactsFragment()
+                    openNavSelectedFragment(activity, contactsFragment)
                     true
                 }
 
@@ -57,6 +61,18 @@ class OrganizerFragment : Fragment() {
 
                 else -> false
             }
+        }
+    }
+
+    private fun openNavSelectedFragment(
+        activity: FragmentActivity,
+        fragment: Fragment,
+    ) {
+        val organizerContainerId = binding.organizerContainer.id
+        val fragmentManager = activity.supportFragmentManager
+
+        fragmentManager.commit {
+            replace(organizerContainerId, fragment)
         }
     }
 

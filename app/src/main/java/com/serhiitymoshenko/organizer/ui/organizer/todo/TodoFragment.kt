@@ -1,60 +1,150 @@
 package com.serhiitymoshenko.organizer.ui.organizer.todo
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.serhiitymoshenko.organizer.R
+import com.serhiitymoshenko.organizer.data.entities.task.Task
+import com.serhiitymoshenko.organizer.databinding.FragmentTodoBinding
+import com.serhiitymoshenko.organizer.ui.organizer.todo.adapters.TabsAdapter
+import com.serhiitymoshenko.organizer.ui.organizer.todo.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.organizer.todo.edittask.EditTaskFragment
+import com.serhiitymoshenko.organizer.ui.organizer.todo.viewmodel.TodoViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TodoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TodoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var _binding: FragmentTodoBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel by inject<TodoViewModel>()
+
+    private lateinit var tabsAdapter: TabsAdapter
+    private lateinit var searchedTasksAdapter: TasksAdapter
+
+    private val tabNames by lazy {
+        val context = requireContext()
+
+        listOf(
+            getString(R.string.in_progress_title),
+            getString(R.string.done_title),
+            getString(R.string.deleted_title)
+        )
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todo, container, false)
+    ): View {
+        _binding = FragmentTodoBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TodoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TodoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val activity = requireActivity()
+
+        setupPager(activity)
+        setupSearchedTasksRecycler(activity)
+        setListeners()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        lifecycleScope.launch(Dispatchers.IO + SupervisorJob()) {
+            viewModel.getSearchedTasks().collect { tasks ->
+                searchedTasksAdapter.submitList(tasks)
             }
+        }
+    }
+
+    private fun setListeners() {
+        val searchView = binding.tasksSearchView
+        searchView.editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) = viewModel.setSearchQuery(s.toString())
+        })
+    }
+
+    private fun setupSearchedTasksRecycler(activity: FragmentActivity) {
+        initAdapter(activity)
+
+        val searchRecycler = binding.searchedTasksRecycler
+        searchRecycler.apply {
+            adapter = searchedTasksAdapter
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun initAdapter(activity: FragmentActivity) {
+        searchedTasksAdapter = TasksAdapter { task ->
+            navigateToEditTaskFragment(activity, task)
+        }
+    }
+
+//    private fun navigateToAddTaskFragment(activity: FragmentActivity) {
+//        val addTaskFragment = AddTaskFragment()
+//
+//        val organizerContainerId = R.id.organizer_container
+//        val fragmentManager = activity.supportFragmentManager
+//        fragmentManager.commit {
+//            replace(organizerContainerId, addTaskFragment)
+//            addToBackStack(null)
+//        }
+//    }
+
+    private fun navigateToEditTaskFragment(activity: FragmentActivity, task: Task) {
+        val editTaskFragment = EditTaskFragment.newInstance(task)
+
+        val organizerContainerId = R.id.organizer_container
+        val fragmentManager = activity.supportFragmentManager
+        fragmentManager.commit {
+            replace(organizerContainerId, editTaskFragment)
+            addToBackStack(null)
+        }
+    }
+
+    private fun setupPager(activity: FragmentActivity) {
+        val tabLayout = binding.tabLayout
+        val tabsPager = binding.tabsPager
+
+        setTabAdapter(activity, tabsPager)
+        setupTabLayoutMediator(tabLayout, tabsPager)
+    }
+
+    private fun setupTabLayoutMediator(tabLayout: TabLayout, tabsPager: ViewPager2) {
+        TabLayoutMediator(tabLayout, tabsPager) { tab, position ->
+            tab.text = tabNames[position]
+        }.attach()
+    }
+
+    private fun setTabAdapter(activity: FragmentActivity, tabsPager: ViewPager2) {
+        tabsAdapter = TabsAdapter(activity, tabNames.size)
+        tabsPager.adapter = tabsAdapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
