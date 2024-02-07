@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.contacts.ui.home.viewmodel
+package com.serhiitymoshenko.organizer.ui.home.contacts.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.serhiitymoshenko.contacts.ui.repositories.ContactsRepository

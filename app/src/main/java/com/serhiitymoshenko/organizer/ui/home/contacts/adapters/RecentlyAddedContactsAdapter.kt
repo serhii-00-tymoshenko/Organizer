@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.serhiitymoshenko.organizer.data.models.Contact
 import com.serhiitymoshenko.organizer.databinding.ItemContactCompactBinding
+import dalvik.system.ZipPathValidator.setCallback
 
 class RecentlyAddedContactsAdapter :
     ListAdapter<Contact, RecentlyAddedContactsAdapter.RecentlyAddedContactViewHolder>(
@@ -23,11 +25,28 @@ class RecentlyAddedContactsAdapter :
     }
 
     override fun onBindViewHolder(holder: RecentlyAddedContactViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentContact = getItem(position)
+        holder.bind(currentContact)
     }
 
     inner class RecentlyAddedContactViewHolder(private val binding: ItemContactCompactBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(contact: Contact) {
+            setContent(contact)
+            setListeners(contact)
+        }
+
+        private fun setContent(contact: Contact) {
+            binding.apply {
+                textFirstNameCompact.text = contact.firstName
+                photoCompact.load(contact.photo)
+            }
+        }
+
+        private fun setListeners(contact: Contact) {
+
+        }
+    }
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Contact>() {

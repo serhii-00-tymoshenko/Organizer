@@ -1,10 +1,12 @@
 package com.serhiitymoshenko.contacts.ui.home.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.serhiitymoshenko.organizer.data.models.Contact
 import com.serhiitymoshenko.organizer.databinding.ItemContactBinding
 
@@ -17,11 +19,30 @@ class MyContactsAdapter :
     }
 
     override fun onBindViewHolder(holder: MyContactViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentContact = getItem(position)
+        holder.bind(currentContact)
     }
 
     inner class MyContactViewHolder(private val binding: ItemContactBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(contact: Contact) {
+            setContent(contact)
+            setListeners(contact)
+        }
+
+        private fun setContent(contact: Contact) {
+            binding.apply {
+                textFirstName.text = contact.firstName
+                textLastName.text = contact.lastName
+                photo.load(contact.photo)
+                Log.d("ADAPTER", contact.photo.toString())
+            }
+        }
+
+        private fun setListeners(contact: Contact) {
+
+        }
+    }
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Contact>() {

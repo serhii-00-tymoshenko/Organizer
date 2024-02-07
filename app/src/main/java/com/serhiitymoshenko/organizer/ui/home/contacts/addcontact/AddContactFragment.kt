@@ -1,60 +1,99 @@
 package com.serhiitymoshenko.organizer.ui.home.contacts.addcontact
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.serhiitymoshenko.organizer.R
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import coil.load
+import com.serhiitymoshenko.organizer.data.models.Contact
+import com.serhiitymoshenko.organizer.databinding.FragmentAddContactBinding
+import com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.viewmodel.AddContactViewModel
+import com.serhiitymoshenko.organizer.utils.resize
+import org.koin.android.ext.android.inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AddContactFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddContactFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentAddContactBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel by inject<AddContactViewModel>()
+
+    private val pickPhotoLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            photoUri = uri
+            binding.photo.load(uri)
+        }
+
+    private var photoUri: Uri? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAddContactBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val activity = requireActivity()
+
+        setListeners(activity)
+    }
+
+    private fun setListeners(activity: FragmentActivity) {
+        binding.apply {
+            saveContact.setOnClickListener {
+                val firstName = fieldFirstName.editText?.text.toString()
+                val lastName = fieldLastName.editText?.text.toString()
+                val phoneNumber = fieldPhoneNumber.editText?.text.toString()
+                val email = fieldEmail.editText?.text.toString()
+                var photo: Bitmap? = null
+
+                photoUri?.let { uri ->
+                    val contentResolver = activity.contentResolver
+
+                    photo = if (Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    } else {
+                        val source = ImageDecoder.createSource(contentResolver, uri)
+                        ImageDecoder.decodeBitmap(source)
+                    }
+                    photo = photo?.resize()
+                    Log.d("Home", photo.toString())
+                }
+
+                if (firstName.isNotEmpty() && lastName.isNotEmpty() && phoneNumber.isNotEmpty()) {
+
+                    val contact =
+                        Contact(firstName, lastName, phoneNumber, email, photo, isNew = true)
+                    viewModel.insertContact(contact)
+                } else {
+                    Toast.makeText(activity, "Enter name and phone number", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            photoContainer.setOnClickListener {
+                pickPhotoLauncher.launch("image/*")
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_contact, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddContactFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddContactFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

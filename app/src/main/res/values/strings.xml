@@ -17,6 +17,14 @@
     <string name="recently_added_text">Recently added</string>
     <string name="my_contacts_text">My contacts</string>
     <string name="import_text">Import</string>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="field_email_hint">Email</string>
+    <string name="field_phone_number_hint">Phone number</string>
+    <string name="field_last_name_hint">Last name</string>
+    <string name="field_first_name_hint">First name</string>
+    <string name="save_contact_text">Save contact</string>
+
+    <string name="temp_images_dir">temp_images</string>
+    <string name="temp_image">temp_image.jpg</string>
+    <string name="authorities">com.serhiitymoshenko.organizer</string>
 </resources>

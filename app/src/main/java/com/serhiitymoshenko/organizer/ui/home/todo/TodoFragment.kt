@@ -114,7 +114,7 @@ class TodoFragment : Fragment() {
     private fun navigateToEditTaskFragment(activity: FragmentActivity, task: Task) {
         val editTaskFragment = EditTaskFragment.newInstance(task)
 
-        val organizerContainerId = R.id.organizer_container
+        val organizerContainerId = R.id.home_container
         val fragmentManager = activity.supportFragmentManager
         fragmentManager.commit {
             replace(organizerContainerId, editTaskFragment)

@@ -37,11 +37,6 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
     }
 
     compileOptions {
@@ -95,18 +90,6 @@ dependencies {
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
-    // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.01.00"))
-
-    implementation("androidx.compose.runtime:runtime")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.foundation:foundation-layout")
-    implementation("androidx.compose.material:material")
-    implementation("androidx.compose.runtime:runtime-livedata")
-    implementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-
-    // Compose icons
-    implementation("androidx.compose.material:material-icons-core:1.6.0")
+    // Coil
+    implementation("io.coil-kt:coil:2.5.0")
 }

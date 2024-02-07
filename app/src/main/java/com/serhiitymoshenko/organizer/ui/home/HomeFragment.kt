@@ -30,6 +30,12 @@ class HomeFragment : Fragment() {
         val activity = requireActivity()
 
         setupNavigation(activity)
+        setContent(activity)
+    }
+
+    private fun setContent(activity: FragmentActivity) {
+        val todoFragment = TodoFragment()
+        openNavSelectedFragment(activity, todoFragment)
     }
 
     private fun setupNavigation(activity: FragmentActivity) {
@@ -66,11 +72,11 @@ class HomeFragment : Fragment() {
         activity: FragmentActivity,
         fragment: Fragment,
     ) {
-        val organizerContainerId = binding.organizerContainer.id
+        val homeContainerId = binding.homeContainer.id
         val fragmentManager = activity.supportFragmentManager
 
         fragmentManager.commit {
-            replace(organizerContainerId, fragment)
+            replace(homeContainerId, fragment)
         }
     }
 
