@@ -5,11 +5,13 @@ import com.serhiitymoshenko.organizer.data.db.AppDatabase
 import com.serhiitymoshenko.organizer.data.db.callback.AppDatabaseCallback
 import com.serhiitymoshenko.organizer.data.db.daos.ContactsDao
 import com.serhiitymoshenko.organizer.data.db.daos.TasksDao
+import com.serhiitymoshenko.organizer.ui.repositories.DataStoreRepository
 import com.serhiitymoshenko.organizer.utils.DATABASE_NAME
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val databaseModule = module {
+val localModule = module {
+
     single<AppDatabase> {
         Room.databaseBuilder(
             androidContext().applicationContext,
@@ -26,4 +28,5 @@ val databaseModule = module {
     single<ContactsDao> {
         get<AppDatabase>().contactsDao()
     }
+
 }

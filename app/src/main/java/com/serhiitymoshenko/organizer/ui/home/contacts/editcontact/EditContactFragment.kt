@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.contacts.addcontact
+package com.serhiitymoshenko.organizer.ui.home.contacts.editcontact
 
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +21,7 @@ import com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.viewmodel.AddC
 import com.serhiitymoshenko.organizer.utils.resize
 import org.koin.android.ext.android.inject
 
-class AddContactFragment : Fragment() {
-
+class EditContactFragment : Fragment() {
     private var _binding: FragmentAddContactBinding? = null
     private val binding get() = _binding!!
 
@@ -39,6 +37,14 @@ class AddContactFragment : Fragment() {
 
     private var photoUri: Uri? = null
 
+    private val contact by lazy {
+        arguments?.getParcelable(EDIT_CONTACT_CONTACT_PARAM_KEY) ?: Contact(
+            "Not found",
+            "Not found",
+            "Not found"
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,7 +59,19 @@ class AddContactFragment : Fragment() {
 
         val activity = requireActivity()
 
+        setContent()
         setListeners(activity)
+    }
+
+    private fun setContent() {
+        binding.apply {
+            fieldPhoneNumber.editText?.setText(contact.phoneNumber)
+            fieldFirstName.editText?.setText(contact.firstName)
+            fieldLastName.editText?.setText(contact.lastName)
+            fieldEmail.editText?.setText(contact.email)
+
+            photo.load(contact.photo)
+        }
     }
 
     private fun setListeners(activity: FragmentActivity) {
@@ -63,7 +81,7 @@ class AddContactFragment : Fragment() {
                 val lastName = fieldLastName.editText?.text.toString()
                 val phoneNumber = fieldPhoneNumber.editText?.text.toString()
                 val email = fieldEmail.editText?.text.toString()
-                var photo: Bitmap? = null
+                var photo: Bitmap? = null ?: contact.photo
 
                 photoUri?.let { uri ->
                     val contentResolver = activity.contentResolver
@@ -97,5 +115,17 @@ class AddContactFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private const val EDIT_CONTACT_CONTACT_PARAM_KEY = "contact"
+
+        @JvmStatic
+        fun newInstance(contact: Contact) =
+            EditContactFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(EDIT_CONTACT_CONTACT_PARAM_KEY, contact)
+                }
+            }
     }
 }

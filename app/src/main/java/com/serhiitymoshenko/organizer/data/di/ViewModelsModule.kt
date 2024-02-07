@@ -7,6 +7,8 @@ import com.serhiitymoshenko.organizer.ui.home.todo.edittask.viewmodel.EditTaskVi
 import com.serhiitymoshenko.organizer.ui.home.todo.tasks.inprogresstasks.viewmodel.InProgressTasksViewModel
 import com.serhiitymoshenko.organizer.ui.home.todo.repositories.TasksRepository
 import com.serhiitymoshenko.organizer.ui.home.todo.viewmodel.TodoViewModel
+import com.serhiitymoshenko.organizer.ui.home.viewmodel.HomeViewModel
+import com.serhiitymoshenko.organizer.ui.repositories.DataStoreRepository
 import org.koin.dsl.module
 
 val viewModelsModule = module {
@@ -17,6 +19,10 @@ val viewModelsModule = module {
 
     single<ContactsRepository> {
         ContactsRepository(get())
+    }
+
+    single<DataStoreRepository> {
+        DataStoreRepository(get())
     }
 
     single<InProgressTasksViewModel> {
@@ -37,5 +43,9 @@ val viewModelsModule = module {
 
     single<AddContactViewModel> {
         AddContactViewModel(get())
+    }
+
+    single<HomeViewModel> {
+        HomeViewModel(get())
     }
 }

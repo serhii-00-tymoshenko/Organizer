@@ -145,4 +145,8 @@ class TodoFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    companion object {
+        const val BACK_STACK_NAME = "todo"
+    }
 }
