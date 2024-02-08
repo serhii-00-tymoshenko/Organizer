@@ -28,6 +28,8 @@ class NotificationsHelper(private val context: Context) {
     private val notificationBuilder: NotificationCompat.Builder by lazy {
         NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setContentIntent(contentIntent)
+            .setContentTitle("342")
+            .setContentText("gsdgs")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setOngoing(false) // Until Android 14
             .setAutoCancel(true)
@@ -39,12 +41,12 @@ class NotificationsHelper(private val context: Context) {
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel(
+            val channel = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
                 NOTIFICATION_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_LOW
             )
-            notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID)
+            notificationManager.createNotificationChannel(channel)
         }
     }
 
