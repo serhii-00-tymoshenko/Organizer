@@ -59,12 +59,12 @@ class AddTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val context = requireContext()
+        val activity = requireActivity()
 
-        setListeners(context)
+        setListeners(activity)
     }
 
-    private fun setListeners(context: Context) {
+    private fun setListeners(activity: FragmentActivity) {
         binding.apply {
             setReminder.setOnClickListener {
                 permissionsHelper.checkIfPermissionsGranted() // Has callback defined above
@@ -75,6 +75,7 @@ class AddTaskFragment : Fragment() {
                 if (title.isNotEmpty()) {
                     val task = Task(title, TaskStatus.IN_PROGRESS, _reminderStatus, _hour, _minute)
                     viewModel.insertTask(task)
+                    navigateToPreviousFragment(activity)
                 } else {
                     Toast.makeText(context, "Enter title", Toast.LENGTH_SHORT).show()
                 }

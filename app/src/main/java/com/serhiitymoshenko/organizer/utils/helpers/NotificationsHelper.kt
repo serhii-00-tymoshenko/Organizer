@@ -15,6 +15,7 @@ import com.serhiitymoshenko.organizer.utils.NOTIFICATION_CHANNEL_NAME
 import com.serhiitymoshenko.organizer.utils.NOTIFICATION_ID
 
 class NotificationsHelper(private val context: Context) {
+
     private val contentIntent by lazy {
         PendingIntent.getActivity(
             context,

@@ -1,15 +1,18 @@
 package com.serhiitymoshenko.organizer.utils.helpers
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.serhiitymoshenko.organizer.data.models.Task
 import com.serhiitymoshenko.organizer.data.models.TaskReminderStatus
 import com.serhiitymoshenko.organizer.receivers.AlarmReceiver
 import com.serhiitymoshenko.organizer.utils.ALARM_MANAGER_REQUEST_CODE
 import com.serhiitymoshenko.organizer.utils.TEXT_ARGUMENT_NAME
 import java.util.Calendar
+import kotlin.math.log
 
 class AlarmManagerHelper(private val context: Context) {
 
@@ -18,9 +21,9 @@ class AlarmManagerHelper(private val context: Context) {
 
     fun schedule(tasks: List<Task>) {
         tasks.forEach { task ->
-            val intent = Intent(context, AlarmReceiver::class.java)
-
-            intent.putExtra(TEXT_ARGUMENT_NAME, task.title)
+            val intent = Intent(context, AlarmReceiver::class.java).apply {
+                putExtra(TEXT_ARGUMENT_NAME, task.title)
+            }
 
             val pendingIntent =
                 PendingIntent.getBroadcast(
@@ -40,7 +43,7 @@ class AlarmManagerHelper(private val context: Context) {
                 }
 
                 TaskReminderStatus.EVERY_DAY -> {
-                    alarmManager.setRepeating(AlarmManager.RTC, alarmCalendar.timeInMillis, 2 * 60 * 1000, pendingIntent)
+                    alarmManager.setRepeating(AlarmManager.RTC, alarmCalendar.timeInMillis, 24 * 60 * 60 * 1000, pendingIntent)
                 }
 
                 else -> {}

@@ -3,6 +3,7 @@ package com.serhiitymoshenko.organizer.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.serhiitymoshenko.organizer.utils.TEXT_ARGUMENT_NAME
 import com.serhiitymoshenko.organizer.utils.helpers.NotificationsHelper
 
@@ -12,6 +13,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
         context?.let {
             val notificationsHelper = NotificationsHelper(context)
+
+            Log.d("NOTIFICATION", text.toString())
 
             notificationsHelper.getNotification()
             notificationsHelper.updateNotification(text)
