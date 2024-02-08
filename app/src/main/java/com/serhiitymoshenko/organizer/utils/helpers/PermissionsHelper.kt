@@ -12,14 +12,15 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.serhiitymoshenko.organizer.R
 
-class PermissionsHelper(private val fragment: Fragment, private val permissions: Map<String, Int>, private val permissionsGrantedCallback: () -> Unit) {
+class PermissionsHelper(fragment: Fragment, private val permissions: Map<String, Int>, private val permissionsGrantedCallback: () -> Unit) {
+
+    private val context by lazy { fragment.requireContext() }
+    private val activity by lazy { fragment.requireActivity() }
 
     private val requestPermissionsLauncher =
         fragment.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
             if (permissionsMap.values.any { isGranted -> isGranted }) {
                 permissionsGrantedCallback.invoke()
-            } else {
-                requestPermissions()
             }
         }
 
@@ -27,9 +28,9 @@ class PermissionsHelper(private val fragment: Fragment, private val permissions:
         fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
     fun checkIfPermissionsGranted() {
-        val isAllPermissionsGranted = permissions.keys.any { permission ->
+        val isAllPermissionsGranted = permissions.keys.all { permission ->
             ContextCompat.checkSelfPermission(
-                fragment.requireContext(),
+                context,
                 permission
             ) == PackageManager.PERMISSION_GRANTED
         }
@@ -45,8 +46,8 @@ class PermissionsHelper(private val fragment: Fragment, private val permissions:
         when {
             permissions.keys.any { permissionName ->
                 !ActivityCompat.shouldShowRequestPermissionRationale(
-                    fragment.requireActivity(), permissionName)
-            } -> startPermissionAwareDialog(fragment.requireContext(), permissions)
+                    activity, permissionName)
+            } -> startPermissionAwareDialog(permissions)
 
             else -> {
                 requestPermissionsLauncher.launch(permissions.keys.toTypedArray())
@@ -54,7 +55,7 @@ class PermissionsHelper(private val fragment: Fragment, private val permissions:
         }
     }
 
-    private fun startPermissionAwareDialog(context: Context, permissions: Map<String, Int>) {
+    private fun startPermissionAwareDialog(permissions: Map<String, Int>) {
         val resources = context.resources
         val title = resources.getString(R.string.permission_aware_dialog_title)
         val message = resources.getString(R.string.permission_aware_dialog_message)

@@ -27,7 +27,6 @@ class NotificationsHelper(private val context: Context) {
 
     private val notificationBuilder: NotificationCompat.Builder by lazy {
         NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-            .setSound(null)
             .setContentIntent(contentIntent)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setOngoing(false) // Until Android 14
@@ -45,6 +44,7 @@ class NotificationsHelper(private val context: Context) {
                 NOTIFICATION_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_LOW
             )
+            notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID)
         }
     }
 

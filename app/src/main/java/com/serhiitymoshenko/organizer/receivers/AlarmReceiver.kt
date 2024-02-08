@@ -14,8 +14,6 @@ class AlarmReceiver : BroadcastReceiver() {
         context?.let {
             val notificationsHelper = NotificationsHelper(context)
 
-            Log.d("NOTIFICATION", text.toString())
-
             notificationsHelper.getNotification()
             notificationsHelper.updateNotification(text)
         }
