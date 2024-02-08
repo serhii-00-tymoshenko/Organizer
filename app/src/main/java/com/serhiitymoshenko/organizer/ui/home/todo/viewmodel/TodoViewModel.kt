@@ -18,4 +18,6 @@ class TodoViewModel(private val tasksRepository: TasksRepository) : ViewModel() 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val searchedTasks: Flow<List<Task>> =  searchQuery.flatMapLatest { tasksRepository.getSearchedTasks(it) }
     fun getSearchedTasks() = searchedTasks
+
+    fun getTasksWithReminder() = tasksRepository.getTasksWithReminder()
 }

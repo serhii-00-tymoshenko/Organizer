@@ -31,8 +31,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="permission_aware_dialog_title">Let us make your experience the best</string>
-    <string name="permission_aware_dialog_message">We ask you to accept some permissions</string>
-    <string name="permission_aware_dialog_continue_text">Continue</string>
-    <string name="permission_aware_dialog_cancel_text">Cancel</string>
+    <string name="permission_aware_dialog_title">Help us</string>
+    <string name="permission_aware_dialog_message">We ask you to accept some permissions, so we could made your experience the best</string>
+
+    <string name="dialog_continue_text">Continue</string>
+    <string name="dialog_cancel_text">Cancel</string>
+
+    <string name="reminder_dialog_title">Choose option</string>
+    <string name="reminder_dialog_every_day_text">Every day</string>
+    <string name="reminder_dialog_none_text">None</string>
+    <string name="reminder_dialog_one_time_text">One time</string>
+
+    <string name="save_text">Save</string>
+    <string name="set_reminder_text">Set reminder</string>
+    <string name="field_task_title_hint">Title</string>
 </resources>

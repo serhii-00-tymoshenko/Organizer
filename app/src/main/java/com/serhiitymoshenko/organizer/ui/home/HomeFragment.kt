@@ -51,8 +51,7 @@ class HomeFragment : Fragment() {
 
     private fun setContent(activity: FragmentActivity) {
         val todoFragment = TodoFragment()
-        val backStackName = TodoFragment.BACK_STACK_NAME
-        openNavSelectedFragment(activity, todoFragment, backStackName)
+        openNavSelectedFragment(activity, todoFragment)
     }
 
     private fun setupNavigation(activity: FragmentActivity) {
@@ -60,8 +59,7 @@ class HomeFragment : Fragment() {
             when (item.itemId) {
                 R.id.todo -> {
                     val todoFragment = TodoFragment()
-                    val backStackName = TodoFragment.BACK_STACK_NAME
-                    openNavSelectedFragment(activity, todoFragment, backStackName)
+                    openNavSelectedFragment(activity, todoFragment)
                     true
                 }
 
@@ -72,8 +70,7 @@ class HomeFragment : Fragment() {
 
                 R.id.contacts -> {
                     val contactsFragment = ContactsFragment()
-                    val backStackName = ContactsFragment.BACK_STACK_NAME
-                    openNavSelectedFragment(activity, contactsFragment, backStackName)
+                    openNavSelectedFragment(activity, contactsFragment)
                     true
                 }
 
@@ -90,7 +87,6 @@ class HomeFragment : Fragment() {
     private fun openNavSelectedFragment(
         activity: FragmentActivity,
         fragment: Fragment,
-        backStackName: String
     ) {
         val homeContainerId = binding.homeContainer.id
         val fragmentManager = activity.supportFragmentManager
@@ -113,19 +109,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun startPermissionAwareDialog(context: Context) {
+        val resources = context.resources
+        val title = resources.getString(R.string.permission_aware_dialog_title)
+        val message = resources.getString(R.string.permission_aware_dialog_message)
+        val neutralButtonText = resources.getString(R.string.dialog_cancel_text)
+        val positiveButtonText = resources.getString(R.string.dialog_continue_text)
+
         MaterialAlertDialogBuilder(context)
-            .setTitle(resources.getString(R.string.permission_aware_dialog_title))
-            .setMessage(resources.getString(R.string.permission_aware_dialog_message))
-            .setPositiveButton(resources.getString(R.string.permission_aware_dialog_continue_text)) { dialog, _ ->
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveButtonText) { dialog, _ ->
                 requestPermissions()
-                dialog.cancel()
                 viewModel.changeIsFirstLaunchToFalse()
-            }
-            .setNeutralButton(resources.getString(R.string.permission_aware_dialog_cancel_text)) { dialog, _ ->
                 dialog.cancel()
-                viewModel.changeIsFirstLaunchToFalse()
             }
-            .show()
+            .setNeutralButton(neutralButtonText) { dialog, _ ->
+                viewModel.changeIsFirstLaunchToFalse()
+                dialog.cancel()
+            }.show()
     }
 
 

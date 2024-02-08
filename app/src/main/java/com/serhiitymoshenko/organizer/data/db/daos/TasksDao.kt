@@ -17,6 +17,9 @@ interface TasksDao {
     @Query("SELECT * FROM tasks WHERE title LIKE '%' || :query || '%'")
     fun getSearchedTasks(query: String): Flow<List<Task>>
 
+    @Query("SELECT * FROM tasks WHERE reminder_status LIKE 1 OR 2")
+    fun getTasksWithReminder(): Flow<List<Task>>
+
     @Update
     fun updateTask(task: Task)
 

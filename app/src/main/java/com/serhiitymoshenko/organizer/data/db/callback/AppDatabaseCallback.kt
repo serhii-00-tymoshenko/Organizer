@@ -31,6 +31,7 @@ class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
                 "Click me to edit or delete",
                 TaskStatus.IN_PROGRESS,
                 TaskReminderStatus.NONE,
+                0,
                 0
             )
         )
@@ -39,6 +40,7 @@ class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
                 "Hello",
                 TaskStatus.IN_PROGRESS,
                 TaskReminderStatus.NONE,
+                0,
                 0
             )
         )
@@ -47,6 +49,7 @@ class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
                 "Dmytro, ce rz ui",
                 TaskStatus.IN_PROGRESS,
                 TaskReminderStatus.NONE,
+                0,
                 0
             )
         )

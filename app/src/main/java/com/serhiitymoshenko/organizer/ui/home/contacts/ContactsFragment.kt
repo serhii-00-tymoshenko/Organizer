@@ -111,8 +111,4 @@ class ContactsFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
-    companion object {
-        const val BACK_STACK_NAME = "contacts"
-    }
 }

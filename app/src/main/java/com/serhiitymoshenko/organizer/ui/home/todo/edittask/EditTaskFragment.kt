@@ -29,6 +29,7 @@ class EditTaskFragment : Fragment() {
             "Not found",
             TaskStatus.DELETED,
             TaskReminderStatus.NONE,
+            0,
             0
         )
     }

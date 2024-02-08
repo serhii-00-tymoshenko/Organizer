@@ -15,8 +15,10 @@ data class Task(
     val status: TaskStatus,
     @ColumnInfo(name = "reminder_status")
     val reminderStatus: TaskReminderStatus,
-    @ColumnInfo(name = "reminder_time")
-    val reminderTime: Long,
+    @ColumnInfo(name = "reminder_hour")
+    val reminderHour: Int,
+    @ColumnInfo(name = "reminder_minute")
+    val reminderMinute: Int,
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null
 ) : Parcelable

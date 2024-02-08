@@ -3,6 +3,7 @@ package com.serhiitymoshenko.organizer.ui.home.todo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +20,13 @@ import com.serhiitymoshenko.organizer.data.models.Task
 import com.serhiitymoshenko.organizer.databinding.FragmentTodoBinding
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TabsAdapter
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.home.todo.addtask.AddTaskFragment
 import com.serhiitymoshenko.organizer.ui.home.todo.edittask.EditTaskFragment
 import com.serhiitymoshenko.organizer.ui.home.todo.viewmodel.TodoViewModel
+import com.serhiitymoshenko.organizer.utils.helpers.AlarmManagerHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -35,6 +39,10 @@ class TodoFragment : Fragment() {
 
     private lateinit var tabsAdapter: TabsAdapter
     private lateinit var searchedTasksAdapter: TasksAdapter
+
+    private val alarmManager by lazy {
+        AlarmManagerHelper(requireContext())
+    }
 
     private val tabNames by lazy {
         listOf(
@@ -60,7 +68,7 @@ class TodoFragment : Fragment() {
 
         setupPager(activity)
         setupSearchedTasksRecycler(activity)
-        setListeners()
+        setListeners(activity)
         initObservers()
     }
 
@@ -70,9 +78,16 @@ class TodoFragment : Fragment() {
                 searchedTasksAdapter.submitList(tasks)
             }
         }
+        lifecycleScope.launch(Dispatchers.IO + SupervisorJob()) {
+            viewModel.getTasksWithReminder().collect() { tasks ->
+                alarmManager.cancel()
+                Log.d("TASKS", tasks.toString())
+                alarmManager.schedule(tasks)
+            }
+        }
     }
 
-    private fun setListeners() {
+    private fun setListeners(activity: FragmentActivity) {
         val searchView = binding.tasksSearchView
         searchView.editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -81,6 +96,10 @@ class TodoFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) = viewModel.setSearchQuery(s.toString())
         })
+
+        binding.addTask.setOnClickListener {
+            navigateToAddTaskFragment(activity)
+        }
     }
 
     private fun setupSearchedTasksRecycler(activity: FragmentActivity) {
@@ -100,16 +119,16 @@ class TodoFragment : Fragment() {
         }
     }
 
-//    private fun navigateToAddTaskFragment(activity: FragmentActivity) {
-//        val addTaskFragment = AddTaskFragment()
-//
-//        val organizerContainerId = R.id.organizer_container
-//        val fragmentManager = activity.supportFragmentManager
-//        fragmentManager.commit {
-//            replace(organizerContainerId, addTaskFragment)
-//            addToBackStack(null)
-//        }
-//    }
+    private fun navigateToAddTaskFragment(activity: FragmentActivity) {
+        val addTaskFragment = AddTaskFragment()
+
+        val organizerContainerId = R.id.home_container
+        val fragmentManager = activity.supportFragmentManager
+        fragmentManager.commit {
+            replace(organizerContainerId, addTaskFragment)
+            addToBackStack(null)
+        }
+    }
 
     private fun navigateToEditTaskFragment(activity: FragmentActivity, task: Task) {
         val editTaskFragment = EditTaskFragment.newInstance(task)
@@ -144,9 +163,5 @@ class TodoFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    companion object {
-        const val BACK_STACK_NAME = "todo"
     }
 }
