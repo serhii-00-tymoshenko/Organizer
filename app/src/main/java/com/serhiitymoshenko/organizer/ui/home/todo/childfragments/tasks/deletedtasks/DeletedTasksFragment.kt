@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.data.models.task.Task
 import com.serhiitymoshenko.organizer.databinding.FragmentInProgressTasksBinding
-import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
 import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.edittask.EditTaskFragment
 import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.deletedtasks.viewmodel.DeletedTasksViewModel
 import kotlinx.coroutines.Dispatchers

@@ -27,7 +27,7 @@ class RemindersHelper(
                 dialog.cancel()
             }
             .setNeutralButton(TaskReminderStatus.NONE.name) { dialog, _ ->
-                startTimePicker(TaskReminderStatus.NONE)
+                timePickedCallback.invoke(0, 0, TaskReminderStatus.NONE)
                 dialog.cancel()
             }
             .show()
