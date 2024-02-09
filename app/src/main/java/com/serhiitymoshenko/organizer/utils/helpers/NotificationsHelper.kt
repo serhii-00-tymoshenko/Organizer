@@ -9,30 +9,29 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.serhiitymoshenko.organizer.R
+import com.serhiitymoshenko.organizer.data.models.task.Task
 import com.serhiitymoshenko.organizer.ui.MainActivity
 import com.serhiitymoshenko.organizer.utils.NOTIFICATION_CHANNEL_ID
 import com.serhiitymoshenko.organizer.utils.NOTIFICATION_CHANNEL_NAME
-import com.serhiitymoshenko.organizer.utils.NOTIFICATION_ID
 
-class NotificationsHelper(private val context: Context) {
+class NotificationsHelper(private val context: Context, private val notificationId: Int) {
+
 
     private val contentIntent by lazy {
         PendingIntent.getActivity(
             context,
-            0,
+            notificationId,
             Intent(context, MainActivity::class.java),
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_MUTABLE
         )
     }
 
     private val notificationBuilder: NotificationCompat.Builder by lazy {
         NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setContentIntent(contentIntent)
-            .setContentTitle("342")
-            .setContentText("gsdgs")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setOngoing(false) // Until Android 14
-            .setAutoCancel(true)
+            .setAutoCancel(false)
     }
 
     private val notificationManager by lazy {
@@ -56,11 +55,10 @@ class NotificationsHelper(private val context: Context) {
         return notificationBuilder.build()
     }
 
-    fun updateNotification(text: String?) {
-        text?.let {
-            notificationBuilder.setContentTitle(text)
-        }
+    fun updateNotification(task: Task) {
+        notificationBuilder.setContentTitle(task.title)
+        notificationBuilder.setContentText(task.status.toString())
 
-        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }

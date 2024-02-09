@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import coil.load
 import coil.size.Scale
-import com.serhiitymoshenko.organizer.data.models.Contact
+import com.serhiitymoshenko.organizer.data.models.contact.Contact
+import com.serhiitymoshenko.organizer.data.models.converters.toContactEntity
 import com.serhiitymoshenko.organizer.databinding.FragmentAddContactBinding
 import com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.viewmodel.AddContactViewModel
 import com.serhiitymoshenko.organizer.utils.resize
@@ -80,8 +80,8 @@ class AddContactFragment : Fragment() {
                 if (firstName.isNotEmpty() && lastName.isNotEmpty() && phoneNumber.isNotEmpty()) {
 
                     val contact =
-                        Contact(firstName, lastName, phoneNumber, email, photo, isNew = true)
-                    viewModel.insertContact(contact)
+                        Contact(0, firstName, lastName, phoneNumber, email, photo, true)
+                    viewModel.insertContact(contact.toContactEntity())
                 } else {
                     Toast.makeText(activity, "Enter name and phone number", Toast.LENGTH_SHORT)
                         .show()

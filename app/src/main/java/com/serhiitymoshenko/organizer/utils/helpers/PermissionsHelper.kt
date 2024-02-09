@@ -1,18 +1,19 @@
 package com.serhiitymoshenko.organizer.utils.helpers
 
-import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.serhiitymoshenko.organizer.R
 
-class PermissionsHelper(fragment: Fragment, private val permissions: Map<String, Int>, private val permissionsGrantedCallback: () -> Unit) {
+class PermissionsHelper(
+    fragment: Fragment,
+    private val permissions: Map<String, Int>,
+    private val permissionsGrantedCallback: () -> Unit
+) {
 
     private val context by lazy { fragment.requireContext() }
     private val activity by lazy { fragment.requireActivity() }
@@ -45,8 +46,9 @@ class PermissionsHelper(fragment: Fragment, private val permissions: Map<String,
     private fun requestPermissions() {
         when {
             permissions.keys.any { permissionName ->
-                !ActivityCompat.shouldShowRequestPermissionRationale(
-                    activity, permissionName)
+                ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity, permissionName
+                )
             } -> startPermissionAwareDialog(permissions)
 
             else -> {

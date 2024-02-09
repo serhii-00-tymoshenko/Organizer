@@ -1,14 +1,17 @@
-package com.serhiitymoshenko.organizer.data.models
+package com.serhiitymoshenko.organizer.data.db.entities
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Entity(tableName = "tasks")
-data class Task(
+data class TaskEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null,
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "status")
@@ -16,9 +19,7 @@ data class Task(
     @ColumnInfo(name = "reminder_status")
     val reminderStatus: TaskReminderStatus,
     @ColumnInfo(name = "reminder_hour")
-    val reminderHour: Int,
+    val reminderHour: Int?,
     @ColumnInfo(name = "reminder_minute")
-    val reminderMinute: Int,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null
-) : Parcelable
+    val reminderMinute: Int?,
+)

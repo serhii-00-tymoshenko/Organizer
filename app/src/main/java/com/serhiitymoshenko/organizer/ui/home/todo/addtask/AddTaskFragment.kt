@@ -1,7 +1,6 @@
 package com.serhiitymoshenko.organizer.ui.home.todo.addtask
 
 import android.Manifest
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.serhiitymoshenko.organizer.data.models.Task
-import com.serhiitymoshenko.organizer.data.models.TaskReminderStatus
-import com.serhiitymoshenko.organizer.data.models.TaskStatus
+import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
+import com.serhiitymoshenko.organizer.data.models.converters.toTaskEntity
+import com.serhiitymoshenko.organizer.data.models.task.Task
+import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
 import com.serhiitymoshenko.organizer.databinding.FragmentAddTaskBinding
 import com.serhiitymoshenko.organizer.ui.home.todo.addtask.viewmodel.AddTaskViewModel
 import com.serhiitymoshenko.organizer.utils.helpers.PermissionsHelper
@@ -32,9 +33,10 @@ class AddTaskFragment : Fragment() {
 
     private val remindersHelper by lazy {
         RemindersHelper(requireActivity()) { hour, minute, status ->
-            _hour = hour
-            _minute = minute
-            _reminderStatus = status
+            this@AddTaskFragment.hour = hour
+            this@AddTaskFragment.minute = minute
+            reminderStatus = status
+            setContent(reminderStatus, hour, minute)
         }
     }
 
@@ -43,9 +45,9 @@ class AddTaskFragment : Fragment() {
             remindersHelper.showReminderAlertDialog()
         }
 
-    private var _reminderStatus: TaskReminderStatus = TaskReminderStatus.NONE
-    private var _hour: Int = 0
-    private var _minute: Int = 0
+    private var reminderStatus: TaskReminderStatus = TaskReminderStatus.NONE
+    private var hour: Int = 0
+    private var minute: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +63,27 @@ class AddTaskFragment : Fragment() {
 
         val activity = requireActivity()
 
+        setContent()
         setListeners(activity)
+    }
+
+    private fun setContent(
+        reminderStatus: TaskReminderStatus? = null,
+        reminderHour: Int? = null,
+        reminderMinute: Int? = null
+    ) {
+        if (reminderStatus == null) {
+            binding.apply {
+                textReminderStatus.text = TaskReminderStatus.NONE.name
+                textReminderTime.text = TaskReminderStatus.NONE.name
+            }
+        } else {
+            val reminderTime = "$reminderHour:$reminderMinute"
+            binding.apply {
+                textReminderStatus.text = reminderStatus.name
+                textReminderTime.text = reminderTime
+            }
+        }
     }
 
     private fun setListeners(activity: FragmentActivity) {
@@ -70,11 +92,11 @@ class AddTaskFragment : Fragment() {
                 permissionsHelper.checkIfPermissionsGranted() // Has callback defined above
             }
 
-            save.setOnClickListener {
+            saveTask.setOnClickListener {
                 val title = fieldTitle.editText?.text.toString()
                 if (title.isNotEmpty()) {
-                    val task = Task(title, TaskStatus.IN_PROGRESS, _reminderStatus, _hour, _minute)
-                    viewModel.insertTask(task)
+                    val taskEntity = TaskEntity(null , title, TaskStatus.IN_PROGRESS, reminderStatus, hour, minute)
+                    viewModel.insertTask(taskEntity)
                     navigateToPreviousFragment(activity)
                 } else {
                     Toast.makeText(context, "Enter title", Toast.LENGTH_SHORT).show()

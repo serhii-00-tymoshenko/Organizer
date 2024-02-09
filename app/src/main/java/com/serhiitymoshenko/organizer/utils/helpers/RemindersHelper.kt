@@ -1,11 +1,11 @@
 package com.serhiitymoshenko.organizer.utils.helpers
 
-import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.serhiitymoshenko.organizer.R
-import com.serhiitymoshenko.organizer.data.models.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
 
 class RemindersHelper(
     private val activity: FragmentActivity,
@@ -38,6 +38,7 @@ class RemindersHelper(
 
         val timePicker = MaterialTimePicker.Builder()
             .setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD)
+            .setTimeFormat(TimeFormat.CLOCK_24H)
             .setPositiveButtonText(positiveButtonText)
             .setTitleText("Choose time")
             .build()

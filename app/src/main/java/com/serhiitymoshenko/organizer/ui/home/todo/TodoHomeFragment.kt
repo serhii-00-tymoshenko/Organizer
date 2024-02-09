@@ -16,26 +16,25 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.serhiitymoshenko.organizer.R
-import com.serhiitymoshenko.organizer.data.models.Task
-import com.serhiitymoshenko.organizer.databinding.FragmentTodoBinding
+import com.serhiitymoshenko.organizer.data.models.task.Task
+import com.serhiitymoshenko.organizer.databinding.FragmentTodoHomeBinding
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TabsAdapter
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
 import com.serhiitymoshenko.organizer.ui.home.todo.addtask.AddTaskFragment
 import com.serhiitymoshenko.organizer.ui.home.todo.edittask.EditTaskFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.viewmodel.TodoViewModel
+import com.serhiitymoshenko.organizer.ui.home.todo.viewmodel.TodoHomeViewModel
 import com.serhiitymoshenko.organizer.utils.helpers.AlarmManagerHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class TodoFragment : Fragment() {
+class TodoHomeFragment : Fragment() {
 
-    private var _binding: FragmentTodoBinding? = null
+    private var _binding: FragmentTodoHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by inject<TodoViewModel>()
+    private val viewModel by inject<TodoHomeViewModel>()
 
     private lateinit var tabsAdapter: TabsAdapter
     private lateinit var searchedTasksAdapter: TasksAdapter
@@ -57,7 +56,7 @@ class TodoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTodoBinding.inflate(inflater, container, false)
+        _binding = FragmentTodoHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -79,9 +78,9 @@ class TodoFragment : Fragment() {
             }
         }
         lifecycleScope.launch(Dispatchers.IO + SupervisorJob()) {
-            viewModel.getTasksWithReminder().collect() { tasks ->
+            viewModel.getTasksWithReminder().collect { tasks ->
                 alarmManager.cancel()
-                Log.d("TASKS", tasks.toString())
+                Log.d("TASKS", "initObservers: ")
                 alarmManager.schedule(tasks)
             }
         }

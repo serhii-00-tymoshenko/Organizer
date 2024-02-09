@@ -2,15 +2,15 @@ package com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.serhiitymoshenko.contacts.ui.repositories.ContactsRepository
-import com.serhiitymoshenko.organizer.data.models.Contact
+import com.serhiitymoshenko.organizer.ui.home.contacts.repositories.ContactsRepository
+import com.serhiitymoshenko.organizer.data.db.entities.ContactEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class AddContactViewModel(private val contactsRepository: ContactsRepository) : ViewModel() {
 
-    fun insertContact(contact: Contact) = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
-        contactsRepository.insertContact(contact)
+    fun insertContact(contactEntity: ContactEntity) = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        contactsRepository.insertContact(contactEntity)
     }
 }

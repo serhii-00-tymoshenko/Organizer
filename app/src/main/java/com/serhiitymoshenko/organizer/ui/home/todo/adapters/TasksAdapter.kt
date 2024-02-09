@@ -1,11 +1,15 @@
 package com.serhiitymoshenko.organizer.ui.home.todo.adapters
 
+import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.serhiitymoshenko.organizer.data.models.Task
+import com.serhiitymoshenko.organizer.data.models.task.Task
+import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
 import com.serhiitymoshenko.organizer.databinding.ItemTaskBinding
 
 class TasksAdapter(
@@ -42,6 +46,18 @@ class TasksAdapter(
         private fun setContent(task: Task) {
             binding.apply {
                 taskName.text = task.title
+
+                if (task.status == TaskStatus.DONE) {
+                    imageDone.visibility = View.VISIBLE
+                }
+
+                if (task.status == TaskStatus.DELETED) {
+                    taskName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                }
+
+                if (task.reminderStatus != TaskReminderStatus.NONE) {
+                    imageScheduled.visibility = View.VISIBLE
+                }
             }
         }
     }

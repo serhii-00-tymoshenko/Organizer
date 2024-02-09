@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.data.di
+package com.serhiitymoshenko.organizer.data.di.modules.networking.childmodules
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

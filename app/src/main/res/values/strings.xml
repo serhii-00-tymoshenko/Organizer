@@ -42,7 +42,7 @@
     <string name="reminder_dialog_none_text">None</string>
     <string name="reminder_dialog_one_time_text">One time</string>
 
-    <string name="save_text">Save</string>
+    <string name="save_task_text">Save task</string>
     <string name="set_reminder_text">Set reminder</string>
     <string name="field_task_title_hint">Title</string>
 </resources>

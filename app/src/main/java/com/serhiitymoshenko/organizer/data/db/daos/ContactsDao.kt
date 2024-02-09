@@ -6,24 +6,24 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.serhiitymoshenko.organizer.data.models.Contact
+import com.serhiitymoshenko.organizer.data.db.entities.ContactEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ContactsDao {
 
     @Query("SELECT * FROM contacts")
-    fun getContacts(): Flow<List<Contact>>
+    fun getContacts(): Flow<List<ContactEntity>>
 
     @Query("SELECT * FROM contacts WHERE is_new = 1")
-    fun getRecentlyAddedContacts(): Flow<List<Contact>>
+    fun getRecentlyAddedContacts(): Flow<List<ContactEntity>>
 
     @Update
-    suspend fun updateContact(contact: Contact)
+    suspend fun updateContact(contactEntity: ContactEntity)
 
     @Delete
-    suspend fun deleteContact(contact: Contact)
+    suspend fun deleteContact(contactEntity: ContactEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertContact(contact: Contact)
+    suspend fun insertContact(contactEntity: ContactEntity)
 }

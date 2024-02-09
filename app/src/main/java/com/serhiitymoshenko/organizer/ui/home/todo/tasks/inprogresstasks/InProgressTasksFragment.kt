@@ -10,7 +10,8 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.R
-import com.serhiitymoshenko.organizer.data.models.Task
+import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
+import com.serhiitymoshenko.organizer.data.models.task.Task
 import com.serhiitymoshenko.organizer.databinding.FragmentInProgressTasksBinding
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
 import com.serhiitymoshenko.organizer.ui.home.todo.edittask.EditTaskFragment

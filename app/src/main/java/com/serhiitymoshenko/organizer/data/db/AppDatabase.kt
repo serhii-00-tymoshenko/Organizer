@@ -6,11 +6,11 @@ import androidx.room.TypeConverters
 import com.serhiitymoshenko.organizer.data.db.converters.BitmapConverter
 import com.serhiitymoshenko.organizer.data.db.daos.ContactsDao
 import com.serhiitymoshenko.organizer.data.db.daos.TasksDao
-import com.serhiitymoshenko.organizer.data.models.Contact
-import com.serhiitymoshenko.organizer.data.models.Task
+import com.serhiitymoshenko.organizer.data.db.entities.ContactEntity
+import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
 
 @TypeConverters(BitmapConverter::class)
-@Database(entities = [Task::class, Contact::class], version = 1)
+@Database(entities = [TaskEntity::class, ContactEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun tasksDao(): TasksDao

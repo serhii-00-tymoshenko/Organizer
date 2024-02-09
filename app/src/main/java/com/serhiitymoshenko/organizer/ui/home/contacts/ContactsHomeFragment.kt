@@ -1,7 +1,6 @@
 package com.serhiitymoshenko.organizer.ui.home.contacts
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,21 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.contacts.ui.home.adapters.MyContactsAdapter
 import com.serhiitymoshenko.contacts.ui.home.adapters.RecentlyAddedContactsAdapter
 import com.serhiitymoshenko.organizer.R
-import com.serhiitymoshenko.organizer.ui.home.contacts.viewmodel.ContactsViewModel
-import com.serhiitymoshenko.organizer.data.models.Contact
-import com.serhiitymoshenko.organizer.databinding.FragmentContactsBinding
+import com.serhiitymoshenko.organizer.data.models.contact.Contact
+import com.serhiitymoshenko.organizer.databinding.FragmentContactsHomeBinding
 import com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.AddContactFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import com.serhiitymoshenko.organizer.ui.home.contacts.viewmodel.ContactsHomeViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class ContactsFragment : Fragment() {
+class ContactsHomeFragment : Fragment() {
 
-    private var _binding: FragmentContactsBinding? = null
+    private var _binding: FragmentContactsHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ContactsViewModel by inject<ContactsViewModel>()
+    private val viewModel: ContactsHomeViewModel by inject<ContactsHomeViewModel>()
 
     private lateinit var myContactsAdapter: MyContactsAdapter
     private lateinit var recentlyAddedContactsAdapter: RecentlyAddedContactsAdapter
@@ -37,7 +34,7 @@ class ContactsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentContactsBinding.inflate(inflater, container, false)
+        _binding = FragmentContactsHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 

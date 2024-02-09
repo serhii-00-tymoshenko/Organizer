@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.serhiitymoshenko.organizer.data.models.Contact
+import com.serhiitymoshenko.organizer.data.db.entities.ContactEntity
+import com.serhiitymoshenko.organizer.data.models.contact.Contact
 import com.serhiitymoshenko.organizer.databinding.ItemContactCompactBinding
-import dalvik.system.ZipPathValidator.setCallback
 
 class RecentlyAddedContactsAdapter :
     ListAdapter<Contact, RecentlyAddedContactsAdapter.RecentlyAddedContactViewHolder>(

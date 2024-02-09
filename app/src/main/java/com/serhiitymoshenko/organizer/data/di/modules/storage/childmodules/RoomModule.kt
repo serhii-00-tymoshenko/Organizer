@@ -1,16 +1,15 @@
-package com.serhiitymoshenko.organizer.data.di
+package com.serhiitymoshenko.organizer.data.di.modules.storage.childmodules
 
 import androidx.room.Room
 import com.serhiitymoshenko.organizer.data.db.AppDatabase
 import com.serhiitymoshenko.organizer.data.db.callback.AppDatabaseCallback
 import com.serhiitymoshenko.organizer.data.db.daos.ContactsDao
 import com.serhiitymoshenko.organizer.data.db.daos.TasksDao
-import com.serhiitymoshenko.organizer.ui.repositories.DataStoreRepository
 import com.serhiitymoshenko.organizer.utils.DATABASE_NAME
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val localModule = module {
+val roomModule = module {
 
     single<AppDatabase> {
         Room.databaseBuilder(

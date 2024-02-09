@@ -3,9 +3,9 @@ package com.serhiitymoshenko.organizer.data.db.callback
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.serhiitymoshenko.organizer.data.db.daos.TasksDao
-import com.serhiitymoshenko.organizer.data.models.Task
-import com.serhiitymoshenko.organizer.data.models.TaskReminderStatus
-import com.serhiitymoshenko.organizer.data.models.TaskStatus
+import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
+import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -14,43 +14,46 @@ import kotlin.coroutines.CoroutineContext
 
 class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
 
-    private val coroutineContext: CoroutineContext by inject<CoroutineContext>()
+    private val coroutineScope by inject<CoroutineScope>()
     private val tasksDao: TasksDao by inject<TasksDao>()
 
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
 
-        CoroutineScope(coroutineContext).launch {
+        coroutineScope.launch {
             prepopulate()
         }
     }
 
     private fun prepopulate() {
         tasksDao.insertTask(
-            Task(
-                "Click me to edit or delete",
-                TaskStatus.IN_PROGRESS,
-                TaskReminderStatus.NONE,
+            TaskEntity(
+                null,
+                "Click me to edit",
+                TaskStatus.DELETED,
+                TaskReminderStatus.ONE_TIME,
                 0,
                 0
             )
         )
         tasksDao.insertTask(
-            Task(
+            TaskEntity(
+                null,
                 "Hello",
-                TaskStatus.IN_PROGRESS,
-                TaskReminderStatus.NONE,
+                TaskStatus.DONE,
+                TaskReminderStatus.ONE_TIME,
                 0,
                 0
             )
         )
         tasksDao.insertTask(
-            Task(
+            TaskEntity(
+                null,
                 "Dmytro, ce rz ui",
                 TaskStatus.IN_PROGRESS,
-                TaskReminderStatus.NONE,
-                0,
-                0
+                TaskReminderStatus.ONE_TIME,
+                null,
+                null
             )
         )
     }

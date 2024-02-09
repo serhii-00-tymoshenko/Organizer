@@ -1,8 +1,8 @@
 package com.serhiitymoshenko.organizer.ui.home.todo.repositories
 
 import com.serhiitymoshenko.organizer.data.db.daos.TasksDao
-import com.serhiitymoshenko.organizer.data.models.Task
-import com.serhiitymoshenko.organizer.data.models.TaskStatus
+import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
+import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
 
 class TasksRepository(private val tasksDao: TasksDao) {
 
@@ -12,5 +12,7 @@ class TasksRepository(private val tasksDao: TasksDao) {
 
     fun getTasksWithReminder() = tasksDao.getTasksWithReminder()
 
-    fun insertTask(task: Task) = tasksDao.insertTask(task)
+    fun insertTask(taskEntity: TaskEntity) = tasksDao.insertTask(taskEntity)
+
+    fun updateTask(taskEntity: TaskEntity) = tasksDao.updateTask(taskEntity)
 }
