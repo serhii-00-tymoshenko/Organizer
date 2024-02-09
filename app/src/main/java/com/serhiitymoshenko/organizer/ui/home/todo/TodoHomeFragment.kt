@@ -19,8 +19,8 @@ import com.serhiitymoshenko.organizer.data.models.task.Task
 import com.serhiitymoshenko.organizer.databinding.FragmentTodoHomeBinding
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TabsAdapter
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
-import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.addtask.AddTaskFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.edittask.EditTaskFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.children.addtask.AddTaskFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.children.edittask.EditTaskFragment
 import com.serhiitymoshenko.organizer.ui.home.todo.viewmodel.TodoHomeViewModel
 import com.serhiitymoshenko.organizer.utils.helpers.AlarmManagerHelper
 import kotlinx.coroutines.Dispatchers
