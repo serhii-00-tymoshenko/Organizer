@@ -19,21 +19,21 @@ class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
 
-        coroutineScope.launch {
-            prepopulate()
-        }
+        prepopulate()
     }
 
     private fun prepopulate() {
-        tasksDao.insertTask(
-            TaskEntity(
-                null,
-                "Click me to edit",
-                TaskStatus.IN_PROGRESS,
-                TaskReminderStatus.NONE,
-                null,
-                null
+        coroutineScope.launch {
+            tasksDao.insertTask(
+                TaskEntity(
+                    null,
+                    "Click me to edit",
+                    TaskStatus.IN_PROGRESS,
+                    TaskReminderStatus.NONE,
+                    null,
+                    null
+                )
             )
-        )
+        }
     }
 }

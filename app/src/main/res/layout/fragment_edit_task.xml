@@ -112,4 +112,19 @@
         app:layout_constraintStart_toEndOf="@+id/text_reminder_status"
         app:layout_constraintTop_toTopOf="@+id/set_reminder" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:contentDescription="@string/description"
+        android:focusable="true"
+        app:backgroundTint="?colorErrorContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_delete"
+        app:tint="?colorOnErrorContainer" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

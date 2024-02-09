@@ -52,13 +52,7 @@ class DeletedTasksFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             deleteForever.setOnClickListener {
-                lifecycleScope.launch(Dispatchers.IO + SupervisorJob()) {
-                    viewModel.getDeletedTasks().collect() { tasks ->
-                        tasks.forEach {
-                            viewModel.deleteTask(it.toTaskEntity())
-                        }
-                    }
-                }
+                viewModel.deleteAllTasks()
             }
         }
     }

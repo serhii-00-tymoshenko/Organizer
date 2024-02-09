@@ -22,11 +22,14 @@ interface TasksDao {
     fun getTasksWithReminder(): Flow<List<TaskEntity>>
 
     @Update
-    fun updateTask(taskEntity: TaskEntity)
+    suspend fun updateTask(taskEntity: TaskEntity)
 
     @Delete
-    fun deleteTask(taskEntity: TaskEntity)
+    suspend fun deleteTask(taskEntity: TaskEntity)
+
+    @Query("DELETE FROM tasks WHERE status LIKE :status")
+    fun deleteAllTasks(status: TaskStatus)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTask(taskEntity: TaskEntity)
+    suspend fun insertTask(taskEntity: TaskEntity)
 }

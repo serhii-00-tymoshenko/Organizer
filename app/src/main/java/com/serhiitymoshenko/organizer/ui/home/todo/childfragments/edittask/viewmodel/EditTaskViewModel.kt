@@ -13,4 +13,8 @@ class EditTaskViewModel(private val repository: TasksRepository) : ViewModel() {
     fun updateTask(taskEntity: TaskEntity) = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
         repository.updateTask(taskEntity)
     }
+
+    fun deleteTask(taskEntity: TaskEntity) = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        repository.deleteTask(taskEntity)
+    }
 }

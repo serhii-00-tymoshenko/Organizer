@@ -16,7 +16,7 @@ class DeletedTasksViewModel(private val repository: TasksRepository) : ViewModel
     fun getDeletedTasks() = repository.getTasks(TaskStatus.DELETED)
         .map { tasks -> tasks.fromEntitiesToTasks() }
 
-    fun deleteTask(taskEntity: TaskEntity) = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
-        repository.deleteTask(taskEntity)
+    fun deleteAllTasks() = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        repository.deleteAllTasks(TaskStatus.DELETED)
     }
 }

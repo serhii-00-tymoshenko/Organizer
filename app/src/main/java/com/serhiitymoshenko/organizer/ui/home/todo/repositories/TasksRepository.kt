@@ -12,9 +12,11 @@ class TasksRepository(private val tasksDao: TasksDao) {
 
     fun getTasksWithReminder() = tasksDao.getTasksWithReminder()
 
-    fun insertTask(taskEntity: TaskEntity) = tasksDao.insertTask(taskEntity)
+    suspend fun insertTask(taskEntity: TaskEntity) = tasksDao.insertTask(taskEntity)
 
-    fun updateTask(taskEntity: TaskEntity) = tasksDao.updateTask(taskEntity)
+    suspend fun updateTask(taskEntity: TaskEntity) = tasksDao.updateTask(taskEntity)
 
-    fun deleteTask(taskEntity: TaskEntity) = tasksDao.deleteTask(taskEntity)
+    suspend fun deleteTask(taskEntity: TaskEntity) = tasksDao.deleteTask(taskEntity)
+
+    suspend fun deleteAllTasks(status: TaskStatus) = tasksDao.deleteAllTasks(status)
 }

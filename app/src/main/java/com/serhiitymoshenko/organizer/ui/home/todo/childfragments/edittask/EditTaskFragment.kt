@@ -121,6 +121,11 @@ class EditTaskFragment : Fragment() {
             setReminder.setOnClickListener {
                 permissionsHelper.checkIfPermissionsGranted()
             }
+
+            deleteTask.setOnClickListener {
+                viewModel.deleteTask(task.toTaskEntity())
+                returnToPreviousFragment(activity)
+            }
         }
     }
 
