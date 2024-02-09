@@ -35,7 +35,7 @@ class AlarmManagerHelper(private val context: Context) {
                 TaskReminderStatus.ONE_TIME -> {
                     alarmManager.setAndAllowWhileIdle(
                         AlarmManager.RTC,
-                        System.currentTimeMillis() + 5* 1000,
+                        alarmCalendar.timeInMillis - 5 * 60 * 1000,
                         pendingIntent
                     )
                 }
