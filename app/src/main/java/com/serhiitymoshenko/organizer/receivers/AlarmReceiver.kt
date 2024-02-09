@@ -11,18 +11,17 @@ import com.serhiitymoshenko.organizer.utils.TASK_ARGUMENT_KEY
 import com.serhiitymoshenko.organizer.utils.helpers.NotificationsHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.createScope
 import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
 
-class AlarmReceiver : BroadcastReceiver(), KoinScopeComponent {
+class AlarmReceiver : BroadcastReceiver(), KoinComponent {
 
-    override val scope: Scope = createScope(this)
-
-    private val tasksRepository = get<TasksRepository>()
-    private val coroutineScope = get<CoroutineScope>()
+    private val tasksRepository by inject<TasksRepository>()
+    private val coroutineScope by inject<CoroutineScope>()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val task = intent?.getParcelableExtra<Task>(TASK_ARGUMENT_KEY)

@@ -13,7 +13,7 @@ val roomModule = module {
 
     single<AppDatabase> {
         Room.databaseBuilder(
-            androidContext().applicationContext,
+            androidContext(),
             AppDatabase::class.java,
             DATABASE_NAME
         ).addCallback(AppDatabaseCallback())

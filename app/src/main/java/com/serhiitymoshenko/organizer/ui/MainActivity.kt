@@ -18,20 +18,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        configureKoin(this)
-    }
-
-    private fun configureKoin(context: Context) {
-        startKoin {
-            androidLogger()
-            androidContext(context)
-            modules(appModule)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        stopKoin()
     }
 }
