@@ -10,19 +10,21 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.R
+import com.serhiitymoshenko.organizer.data.models.converters.toTaskEntity
 import com.serhiitymoshenko.organizer.data.models.task.Task
-import com.serhiitymoshenko.organizer.databinding.FragmentInProgressTasksBinding
+import com.serhiitymoshenko.organizer.databinding.FragmentDeletedTasksBinding
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
 import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.edittask.EditTaskFragment
 import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.deletedtasks.viewmodel.DeletedTasksViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DeletedTasksFragment : Fragment() {
 
-    private var _binding: FragmentInProgressTasksBinding? = null
+    private var _binding: FragmentDeletedTasksBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<DeletedTasksViewModel>()
@@ -33,7 +35,7 @@ class DeletedTasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentInProgressTasksBinding.inflate(inflater, container, false)
+        _binding = FragmentDeletedTasksBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,6 +46,21 @@ class DeletedTasksFragment : Fragment() {
 
         setupRecycler(activity)
         initObservers()
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.apply {
+            deleteForever.setOnClickListener {
+                lifecycleScope.launch(Dispatchers.IO + SupervisorJob()) {
+                    viewModel.getDeletedTasks().collect() { tasks ->
+                        tasks.forEach {
+                            viewModel.deleteTask(it.toTaskEntity())
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setupRecycler(activity: FragmentActivity) {
