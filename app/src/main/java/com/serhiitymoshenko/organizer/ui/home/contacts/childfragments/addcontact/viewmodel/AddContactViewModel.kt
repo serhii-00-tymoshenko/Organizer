@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.viewmodel
+package com.serhiitymoshenko.organizer.ui.home.contacts.childfragments.addcontact.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

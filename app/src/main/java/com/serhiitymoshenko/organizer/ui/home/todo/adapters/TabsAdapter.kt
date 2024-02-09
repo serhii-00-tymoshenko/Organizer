@@ -3,9 +3,9 @@ package com.serhiitymoshenko.organizer.ui.home.todo.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.serhiitymoshenko.organizer.ui.home.todo.tasks.deletedtasks.DeletedTasksFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.tasks.donetasks.DoneTasksFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.tasks.inprogresstasks.InProgressTasksFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.deletedtasks.DeletedTasksFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.donetasks.DoneTasksFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.inprogresstasks.InProgressTasksFragment
 
 class TabsAdapter(fragmentActivity: FragmentActivity, private val size: Int) :
     FragmentStateAdapter(fragmentActivity) {

@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.todo.tasks.donetasks
+package com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.inprogresstasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,23 +11,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.data.models.task.Task
-import com.serhiitymoshenko.organizer.databinding.FragmentDoneTasksBinding
 import com.serhiitymoshenko.organizer.databinding.FragmentInProgressTasksBinding
-import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
-import com.serhiitymoshenko.organizer.ui.home.todo.edittask.EditTaskFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.tasks.donetasks.viewmodel.DoneTasksViewModel
-import com.serhiitymoshenko.organizer.ui.home.todo.tasks.inprogresstasks.viewmodel.InProgressTasksViewModel
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.edittask.EditTaskFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.inprogresstasks.viewmodel.InProgressTasksViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DoneTasksFragment : Fragment() {
+class InProgressTasksFragment : Fragment() {
 
-    private var _binding: FragmentDoneTasksBinding? = null
+    private var _binding: FragmentInProgressTasksBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModel<DoneTasksViewModel>()
+    private val viewModel by viewModel<InProgressTasksViewModel>()
 
     private lateinit var tasksAdapter: TasksAdapter
 
@@ -35,7 +33,7 @@ class DoneTasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDoneTasksBinding.inflate(inflater, container, false)
+        _binding = FragmentInProgressTasksBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -79,7 +77,7 @@ class DoneTasksFragment : Fragment() {
 
     private fun initObservers() {
         lifecycleScope.launch(Dispatchers.IO + SupervisorJob()) {
-            viewModel.getDoneTasks().collect { tasks ->
+            viewModel.getInProgressTasks().collect { tasks ->
                 tasksAdapter.submitList(tasks)
             }
         }

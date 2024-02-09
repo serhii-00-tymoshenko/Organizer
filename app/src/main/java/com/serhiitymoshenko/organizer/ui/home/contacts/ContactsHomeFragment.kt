@@ -14,7 +14,7 @@ import com.serhiitymoshenko.contacts.ui.home.adapters.RecentlyAddedContactsAdapt
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.data.models.contact.Contact
 import com.serhiitymoshenko.organizer.databinding.FragmentContactsHomeBinding
-import com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.AddContactFragment
+import com.serhiitymoshenko.organizer.ui.home.contacts.childfragments.addcontact.AddContactFragment
 import com.serhiitymoshenko.organizer.ui.home.contacts.viewmodel.ContactsHomeViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject

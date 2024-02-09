@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.todo.tasks.deletedtasks.viewmodel
+package com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.deletedtasks.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.serhiitymoshenko.organizer.data.models.converters.fromEntitiesToTasks

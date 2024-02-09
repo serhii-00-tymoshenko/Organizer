@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.todo.adapters
+package com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.adapters
 
 import android.graphics.Paint
 import android.view.LayoutInflater

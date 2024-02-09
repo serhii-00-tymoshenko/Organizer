@@ -3,7 +3,6 @@ package com.serhiitymoshenko.organizer.ui.home.todo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +18,9 @@ import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.data.models.task.Task
 import com.serhiitymoshenko.organizer.databinding.FragmentTodoHomeBinding
 import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TabsAdapter
-import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
-import com.serhiitymoshenko.organizer.ui.home.todo.addtask.AddTaskFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.edittask.EditTaskFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.addtask.AddTaskFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.edittask.EditTaskFragment
 import com.serhiitymoshenko.organizer.ui.home.todo.viewmodel.TodoHomeViewModel
 import com.serhiitymoshenko.organizer.utils.helpers.AlarmManagerHelper
 import kotlinx.coroutines.Dispatchers
@@ -80,7 +79,6 @@ class TodoHomeFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO + SupervisorJob()) {
             viewModel.getTasksWithReminder().collect { tasks ->
                 alarmManager.cancel()
-                Log.d("TASKS", "initObservers: ")
                 alarmManager.schedule(tasks)
             }
         }

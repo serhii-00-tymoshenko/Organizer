@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.todo.tasks.deletedtasks
+package com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.deletedtasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.data.models.task.Task
-import com.serhiitymoshenko.organizer.databinding.FragmentDeletedTasksBinding
 import com.serhiitymoshenko.organizer.databinding.FragmentInProgressTasksBinding
-import com.serhiitymoshenko.organizer.ui.home.todo.adapters.TasksAdapter
-import com.serhiitymoshenko.organizer.ui.home.todo.edittask.EditTaskFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.tasks.deletedtasks.viewmodel.DeletedTasksViewModel
-import com.serhiitymoshenko.organizer.ui.home.todo.tasks.inprogresstasks.viewmodel.InProgressTasksViewModel
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.adapters.TasksAdapter
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.edittask.EditTaskFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.deletedtasks.viewmodel.DeletedTasksViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch

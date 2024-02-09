@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.contacts.editcontact
+package com.serhiitymoshenko.organizer.ui.home.contacts.childfragments.editcontact
 
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -19,7 +19,7 @@ import com.serhiitymoshenko.organizer.data.db.entities.ContactEntity
 import com.serhiitymoshenko.organizer.data.models.contact.Contact
 import com.serhiitymoshenko.organizer.data.models.converters.toContactEntity
 import com.serhiitymoshenko.organizer.databinding.FragmentAddContactBinding
-import com.serhiitymoshenko.organizer.ui.home.contacts.addcontact.viewmodel.AddContactViewModel
+import com.serhiitymoshenko.organizer.ui.home.contacts.childfragments.addcontact.viewmodel.AddContactViewModel
 import com.serhiitymoshenko.organizer.utils.resize
 import org.koin.android.ext.android.inject
 

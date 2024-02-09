@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.todo.edittask.viewmodel
+package com.serhiitymoshenko.organizer.ui.home.todo.childfragments.addtask.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,9 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class EditTaskViewModel(private val repository: TasksRepository) : ViewModel() {
+class AddTaskViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
-    fun updateTask(taskEntity: TaskEntity) = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
-        repository.updateTask(taskEntity)
+    fun insertTask(taskEntity: TaskEntity) = viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        tasksRepository.insertTask(taskEntity)
     }
 }

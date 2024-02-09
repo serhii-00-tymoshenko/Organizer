@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.coroutines.CoroutineContext
 
 class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
 
@@ -30,28 +29,8 @@ class AppDatabaseCallback : RoomDatabase.Callback(), KoinComponent {
             TaskEntity(
                 null,
                 "Click me to edit",
-                TaskStatus.DELETED,
-                TaskReminderStatus.ONE_TIME,
-                0,
-                0
-            )
-        )
-        tasksDao.insertTask(
-            TaskEntity(
-                null,
-                "Hello",
-                TaskStatus.DONE,
-                TaskReminderStatus.ONE_TIME,
-                0,
-                0
-            )
-        )
-        tasksDao.insertTask(
-            TaskEntity(
-                null,
-                "Dmytro, ce rz ui",
                 TaskStatus.IN_PROGRESS,
-                TaskReminderStatus.ONE_TIME,
+                TaskReminderStatus.NONE,
                 null,
                 null
             )

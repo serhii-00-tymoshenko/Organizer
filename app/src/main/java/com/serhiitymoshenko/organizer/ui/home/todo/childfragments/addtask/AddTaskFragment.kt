@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.todo.addtask
+package com.serhiitymoshenko.organizer.ui.home.todo.childfragments.addtask
 
 import android.Manifest
 import android.os.Build
@@ -15,7 +15,7 @@ import com.serhiitymoshenko.organizer.data.models.task.Task
 import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
 import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
 import com.serhiitymoshenko.organizer.databinding.FragmentAddTaskBinding
-import com.serhiitymoshenko.organizer.ui.home.todo.addtask.viewmodel.AddTaskViewModel
+import com.serhiitymoshenko.organizer.ui.home.todo.childfragments.addtask.viewmodel.AddTaskViewModel
 import com.serhiitymoshenko.organizer.utils.helpers.PermissionsHelper
 import com.serhiitymoshenko.organizer.utils.helpers.RemindersHelper
 import org.koin.android.ext.android.inject

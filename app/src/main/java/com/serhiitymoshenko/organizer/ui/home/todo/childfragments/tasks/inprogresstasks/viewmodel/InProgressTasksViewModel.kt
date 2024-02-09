@@ -1,4 +1,4 @@
-package com.serhiitymoshenko.organizer.ui.home.todo.tasks.inprogresstasks.viewmodel
+package com.serhiitymoshenko.organizer.ui.home.todo.childfragments.tasks.inprogresstasks.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.serhiitymoshenko.organizer.data.models.converters.fromEntitiesToTasks

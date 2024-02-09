@@ -12,20 +12,12 @@ fun Bitmap.resize(sizePx: Int): Bitmap {
     return bitmap
 }
 
-fun Bitmap.toByteArray(): ByteArray? {
-    if (this == null) {
-        return null
-    }
-
+fun Bitmap.toByteArray(): ByteArray {
     val outputStream = ByteArrayOutputStream()
     this.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
     return outputStream.toByteArray()
 }
 
-fun ByteArray.tooBitmap(): Bitmap? {
-    if (this == null) {
-        return null
-    }
-
+fun ByteArray.toBitmap(): Bitmap {
     return BitmapFactory.decodeByteArray(this, 0, this.size)
 }
