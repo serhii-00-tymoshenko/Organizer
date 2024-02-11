@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
-import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
+import com.serhiitymoshenko.organizer.data.models.TaskStatus
 import kotlinx.coroutines.flow.Flow
 
 @Dao

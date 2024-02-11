@@ -2,7 +2,7 @@ package com.serhiitymoshenko.organizer.ui.home.todo.repositories
 
 import com.serhiitymoshenko.organizer.data.db.daos.TasksDao
 import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
-import com.serhiitymoshenko.organizer.data.models.task.TaskStatus
+import com.serhiitymoshenko.organizer.data.models.TaskStatus
 
 class TasksRepository(private val tasksDao: TasksDao) {
 

@@ -1,7 +1,7 @@
 package com.serhiitymoshenko.organizer.data.models.converters
 
 import com.serhiitymoshenko.organizer.data.db.entities.ContactEntity
-import com.serhiitymoshenko.organizer.data.models.contact.Contact
+import com.serhiitymoshenko.organizer.data.models.Contact
 
 fun ContactEntity.fromEntityToContact() =
     Contact(

@@ -9,7 +9,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.serhiitymoshenko.organizer.R
-import com.serhiitymoshenko.organizer.data.models.task.Task
+import com.serhiitymoshenko.organizer.data.models.Task
 import com.serhiitymoshenko.organizer.ui.MainActivity
 import com.serhiitymoshenko.organizer.utils.NOTIFICATION_CHANNEL_ID
 import com.serhiitymoshenko.organizer.utils.NOTIFICATION_CHANNEL_NAME

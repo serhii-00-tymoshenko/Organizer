@@ -8,6 +8,7 @@ import com.serhiitymoshenko.organizer.utils.toByteArray
 
 @TypeConverters
 class BitmapConverter {
+
     @TypeConverter
     fun bitmapToByteArray(bitmap: Bitmap?): ByteArray? = bitmap?.toByteArray()
 

@@ -8,15 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
 import com.serhiitymoshenko.organizer.R
 import com.serhiitymoshenko.organizer.databinding.FragmentHomeBinding
-import com.serhiitymoshenko.organizer.ui.home.contacts.ContactsHomeFragment
-import com.serhiitymoshenko.organizer.ui.home.todo.TodoHomeFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.serhiitymoshenko.organizer.ui.home.contacts.home.ContactsHomeFragment
+import com.serhiitymoshenko.organizer.ui.home.todo.home.TodoHomeFragment
 
 class HomeFragment : Fragment() {
 

@@ -5,7 +5,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.serhiitymoshenko.organizer.R
-import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.TaskReminderStatus
 
 class RemindersHelper(
     private val activity: FragmentActivity,

@@ -4,8 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.serhiitymoshenko.organizer.data.models.task.Task
-import com.serhiitymoshenko.organizer.data.models.task.TaskReminderStatus
+import com.serhiitymoshenko.organizer.data.models.Task
+import com.serhiitymoshenko.organizer.data.models.TaskReminderStatus
 import com.serhiitymoshenko.organizer.receivers.AlarmReceiver
 import com.serhiitymoshenko.organizer.utils.TASK_ARGUMENT_KEY
 import java.util.Calendar

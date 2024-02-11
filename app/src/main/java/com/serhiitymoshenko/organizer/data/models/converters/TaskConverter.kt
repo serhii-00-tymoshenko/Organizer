@@ -1,8 +1,7 @@
 package com.serhiitymoshenko.organizer.data.models.converters
 
-import com.serhiitymoshenko.organizer.data.db.entities.ContactEntity
 import com.serhiitymoshenko.organizer.data.db.entities.TaskEntity
-import com.serhiitymoshenko.organizer.data.models.task.Task
+import com.serhiitymoshenko.organizer.data.models.Task
 
 fun TaskEntity.fromEntityToTask() =
     Task(
